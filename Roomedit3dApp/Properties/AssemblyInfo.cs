@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle( "Roomedit3dApp" )]
-[assembly: AssemblyDescription( "Revit Add-In Description for Roomedit3dApp" )]
+[assembly: AssemblyDescription( "C# .NET Revit API add-in using socket.io to subscribe to real-time roomedit3d BIM updates" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Autodesk Inc." )]
 [assembly: AssemblyProduct( "Roomedit3dApp Revit C# .NET Add-In" )]
@@ -32,5 +32,10 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
+//
+// History:
+//
+// 2016-05-19 2017.0.0.0 initial commit
+//
 [assembly: AssemblyVersion( "2017.0.0.0" )]
 [assembly: AssemblyFileVersion( "2017.0.0.0" )]
