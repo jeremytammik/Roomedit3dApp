@@ -14,6 +14,13 @@ namespace Roomedit3dApp
   /// </summary>
   class BimUpdater : IExternalEventHandler
   {
+    Queue<object> _queue = null;
+
+    public BimUpdater()
+    {
+      _queue = new Queue<object>();
+    }
+
     /// <summary>
     /// Execute method invoked by Revit via the 
     /// external event as a reaction to a call 
@@ -27,19 +34,31 @@ namespace Roomedit3dApp
       {
         t.Start( GetName() );
 
+        while( 0 < _queue.Count )
+        {
+          Debug.Print( _queue.Dequeue().ToString() );
+        }
 
         t.Commit();
       }
+    }
 
-  }
-
-  /// <summary>
-  /// Required IExternalEventHandler interface 
-  /// method returning a descriptive name.
-  /// </summary>
-  public string GetName()
+    /// <summary>
+    /// Required IExternalEventHandler interface 
+    /// method returning a descriptive name.
+    /// </summary>
+    public string GetName()
     {
       return App.Caption + " " + GetType().Name;
+    }
+
+    /// <summary>
+    /// Enqueue a BIM update action to be performed.
+    /// </summary>
+    /// <param name="data"></param>
+    public void Enqueue( object data )
+    {
+      _queue.Enqueue( data );
     }
   }
 }

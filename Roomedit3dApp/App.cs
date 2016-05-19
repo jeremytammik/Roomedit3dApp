@@ -1,6 +1,7 @@
 #region Namespaces
 using Autodesk.Revit.UI;
 using Quobject.SocketIoClientDotNet.Client;
+using System.Diagnostics;
 #endregion
 
 namespace Roomedit3dApp
@@ -18,12 +19,15 @@ namespace Roomedit3dApp
     const string _url = "https://roomedit3d.herokuapp.com/";
 
     #region External event subscription and handling
-    static bool _subscribed = false;
-
     /// <summary>
     /// Store the external event.
     /// </summary>
     static ExternalEvent _event = null;
+
+    /// <summary>
+    /// Store the external event.
+    /// </summary>
+    static BimUpdater _bimUpdater = null;
 
     /// <summary>
     /// Store the socket.
@@ -39,17 +43,29 @@ namespace Roomedit3dApp
     }
 
     /// <summary>
+    /// Enqueue a new BIM updater task.
+    /// </summary>
+    static void Enqueue( object data )
+    {
+      Util.Log( "Enqueue task" );
+      _bimUpdater.Enqueue( data );
+      _event.Raise();
+    }
+
+    /// <summary>
     /// Toggle on and off subscription to automatic 
     /// BIM update from cloud. Return true when subscribed.
     /// </summary>
     public static bool ToggleSubscription()
     {
-      if ( _subscribed )
+      if ( null != _event )
       {
         Util.Log( "Unsubscribing..." );
 
         _socket.Disconnect();
         _socket = null;
+
+        _bimUpdater = null;
 
         _event.Dispose();
         _event = null;
@@ -60,12 +76,13 @@ namespace Roomedit3dApp
       {
         Util.Log( "Subscribing..." );
 
+        _bimUpdater = new BimUpdater();
+
         _socket = IO.Socket( _url );
 
-        _socket.On( "transform", data => Util.Log( data.ToString() ) );
+        _socket.On( "transform", data => Enqueue( data ) );
 
-        _event = ExternalEvent.Create( 
-          new BimUpdater() );
+        _event = ExternalEvent.Create( _bimUpdater );
 
         Util.Log( "Subscribed." );
       }
