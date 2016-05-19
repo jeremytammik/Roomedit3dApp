@@ -36,6 +36,7 @@ using System.Runtime.InteropServices;
 // History:
 //
 // 2016-05-19 2017.0.0.0 initial commit
+// 2016-05-19 2017.0.0.1 implemented toggle subsscription external command
 //
-[assembly: AssemblyVersion( "2017.0.0.0" )]
-[assembly: AssemblyFileVersion( "2017.0.0.0" )]
+[assembly: AssemblyVersion( "2017.0.0.1" )]
+[assembly: AssemblyFileVersion( "2017.0.0.1" )]
