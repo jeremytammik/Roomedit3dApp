@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 // 2016-05-19 2017.0.0.0 initial commit
 // 2016-05-19 2017.0.0.1 implemented toggle subscription external command
 // 2016-05-19 2017.0.0.1 implemented external event and its handler, added BimUpdater and Util classes
+// 2016-05-19 2017.0.0.2 initial experimental socket and removed architecture mismatch warning
 //
-[assembly: AssemblyVersion( "2017.0.0.1" )]
-[assembly: AssemblyFileVersion( "2017.0.0.1" )]
+[assembly: AssemblyVersion( "2017.0.0.2" )]
+[assembly: AssemblyFileVersion( "2017.0.0.2" )]
