@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command Roomedit3dApp</Text>
+    <Description>Some description for Roomedit3dApp</Description>
+    <Assembly>Roomedit3dApp.dll</Assembly>
+    <FullClassName>Roomedit3dApp.Command</FullClassName>
+    <ClientId>ab810ac7-bb39-43e5-82bf-317b55183b9b</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application Roomedit3dApp</Name>
+    <Assembly>Roomedit3dApp.dll</Assembly>
+    <FullClassName>Roomedit3dApp.App</FullClassName>
+    <ClientId>439fbd9d-38ea-490e-bfee-200ad88daa35</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
