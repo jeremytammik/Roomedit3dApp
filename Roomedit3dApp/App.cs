@@ -1,5 +1,6 @@
 #region Namespaces
 using Autodesk.Revit.UI;
+using Quobject.SocketIoClientDotNet.Client;
 #endregion
 
 namespace Roomedit3dApp
@@ -11,6 +12,11 @@ namespace Roomedit3dApp
     /// </summary>
     public const string Caption = "Roomedit3d";
 
+    /// <summary>
+    /// Socket broadcast URL.
+    /// </summary>
+    const string _url = "https://roomedit3d.herokuapp.com/";
+
     #region External event subscription and handling
     static bool _subscribed = false;
 
@@ -18,6 +24,11 @@ namespace Roomedit3dApp
     /// Store the external event.
     /// </summary>
     static ExternalEvent _event = null;
+
+    /// <summary>
+    /// Store the socket.
+    /// </summary>
+    static Socket _socket = null;
 
     /// <summary>
     /// Provide public read-only access to external event.
@@ -37,6 +48,9 @@ namespace Roomedit3dApp
       {
         Util.Log( "Unsubscribing..." );
 
+        _socket.Disconnect();
+        _socket = null;
+
         _event.Dispose();
         _event = null;
 
@@ -45,6 +59,10 @@ namespace Roomedit3dApp
       else
       {
         Util.Log( "Subscribing..." );
+
+        _socket = IO.Socket( _url );
+
+        _socket.On( "transform", data => Util.Log( data.ToString() ) );
 
         _event = ExternalEvent.Create( 
           new BimUpdater() );
