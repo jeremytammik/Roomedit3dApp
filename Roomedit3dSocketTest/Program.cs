@@ -21,9 +21,7 @@ namespace Roomedit3dSocketTest
       Socket socket = IO.Socket( _url, options );
 
       socket.On( Socket.EVENT_CONNECT, () =>
-      {
-        Console.WriteLine( "Connected" );
-      } );
+        Console.WriteLine( "Connected" ) );
 
       socket.On( "transform", (data) =>
       {

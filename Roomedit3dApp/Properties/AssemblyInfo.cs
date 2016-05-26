@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
 // 2016-05-19 2017.0.0.2 initial experimental socket and removed architecture mismatch warning
 // 2016-05-19 2017.0.0.2 Roomedit3dSocketTest works, receiving messages from roomedit3d web server
 // 2016-05-26 2017.0.0.3 Roomedit3dApp socket connection works, receiving messages from roomedit3d web server
+// 2016-05-26 2017.0.0.4 Roomedit3dApp transformation works, updating BIM from viewer live
 //
-[assembly: AssemblyVersion( "2017.0.0.3" )]
-[assembly: AssemblyFileVersion( "2017.0.0.3" )]
+[assembly: AssemblyVersion( "2017.0.0.4" )]
+[assembly: AssemblyFileVersion( "2017.0.0.4" )]

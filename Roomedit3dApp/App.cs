@@ -1,5 +1,7 @@
 #region Namespaces
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
 #endregion
 
@@ -46,8 +48,28 @@ namespace Roomedit3dApp
     /// </summary>
     static void Enqueue( object data )
     {
-      Util.Log( "Enqueue task" );
-      _bimUpdater.Enqueue( data );
+      JObject data2 = JObject.FromObject( data );
+
+      string s = string.Format(
+        "transform: uid={0} ({1:0.00},{2:0.00},{3:0.00})",
+        data2["externalId"], data2["offset"]["x"],
+        data2["offset"]["y"], data2["offset"]["z"] );
+
+      Util.Log( "Enqueue task " + s );
+
+      string uid1 = data2["externalId"].ToString();
+      XYZ offset1 = new XYZ(
+        double.Parse( data2["offset"]["x"].ToString() ),
+        double.Parse( data2["offset"]["y"].ToString() ),
+        double.Parse( data2["offset"]["z"].ToString() ) );
+
+      string uid = (string) data2["externalId"];
+      XYZ offset = new XYZ(
+        (double) data2["offset"]["x"],
+        (double) data2["offset"]["y"], 
+        (double) data2["offset"]["z"] );
+
+      _bimUpdater.Enqueue( uid, offset );
       _event.Raise();
     }
 
@@ -86,7 +108,11 @@ namespace Roomedit3dApp
 
         _socket = IO.Socket( _url, options );
 
-        _socket.On( "transform", data => Enqueue( data ) );
+        _socket.On( Socket.EVENT_CONNECT, () 
+          => Util.Log( "Connected" ) );
+
+        _socket.On( "transform", data 
+          => Enqueue( data ) );
 
         _event = ExternalEvent.Create( _bimUpdater );
 

@@ -23,6 +23,26 @@ namespace Roomedit3dApp
     }
 
     /// <summary>
+    /// Format a real number and return 
+    /// its string representation.
+    /// </summary>
+    public static string RealString( double a )
+    {
+      return a.ToString( "0.##" );
+    }
+
+    /// <summary>
+    /// Format a point or vector and return 
+    /// its string representation.
+    /// </summary>
+    public static string PointString( XYZ p )
+    {
+      return string.Format( "({0},{1},{2})",
+        RealString( p.X ), RealString( p.Y ), 
+        RealString( p.Z ) );
+    }
+
+    /// <summary>
     /// Display a short big message.
     /// </summary>
     public static void InfoMsg( string msg )

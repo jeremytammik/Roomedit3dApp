@@ -15,13 +15,14 @@ namespace Roomedit3dApp
   class BimUpdater : IExternalEventHandler
   {
     /// <summary>
-    /// The queue of pending tasks.
+    /// The queue of pending tasks consisting 
+    /// of UniqueID and translation offset vector.
     /// </summary>
-    Queue<object> _queue = null;
+    Queue<Tuple<string,XYZ>> _queue = null;
 
     public BimUpdater()
     {
-      _queue = new Queue<object>();
+      _queue = new Queue<Tuple<string, XYZ>>();
     }
 
     /// <summary>
@@ -39,9 +40,15 @@ namespace Roomedit3dApp
 
         while ( 0 < _queue.Count )
         {
-          Debug.Print( _queue.Dequeue().ToString() );
-        }
+          Tuple<string, XYZ> task = _queue.Dequeue();
 
+          Debug.Print( "Translating {0} by {1}",
+            task.Item1, Util.PointString( task.Item2 ) );
+
+          Element e = doc.GetElement( task.Item1 );
+          ElementTransformUtils.MoveElement( 
+            doc, e.Id, task.Item2 );
+        }
         t.Commit();
       }
     }
@@ -56,12 +63,15 @@ namespace Roomedit3dApp
     }
 
     /// <summary>
-    /// Enqueue a BIM update action to be performed.
+    /// Enqueue a BIM update action to be performed,
+    /// consisting of UniqueID and translation 
+    /// offset vector.
     /// </summary>
-    /// <param name="data"></param>
-    public void Enqueue( object data )
+    public void Enqueue( string uid, XYZ offset )
     {
-      _queue.Enqueue( data );
+      _queue.Enqueue( 
+        new Tuple<string, XYZ>( 
+          uid, offset ) );
     }
   }
 }
