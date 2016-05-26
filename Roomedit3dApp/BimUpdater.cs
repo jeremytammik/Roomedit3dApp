@@ -18,7 +18,7 @@ namespace Roomedit3dApp
     /// The queue of pending tasks consisting 
     /// of UniqueID and translation offset vector.
     /// </summary>
-    Queue<Tuple<string,XYZ>> _queue = null;
+    Queue<Tuple<string, XYZ>> _queue = null;
 
     public BimUpdater()
     {
@@ -46,7 +46,7 @@ namespace Roomedit3dApp
             task.Item1, Util.PointString( task.Item2 ) );
 
           Element e = doc.GetElement( task.Item1 );
-          ElementTransformUtils.MoveElement( 
+          ElementTransformUtils.MoveElement(
             doc, e.Id, task.Item2 );
         }
         t.Commit();
@@ -69,8 +69,8 @@ namespace Roomedit3dApp
     /// </summary>
     public void Enqueue( string uid, XYZ offset )
     {
-      _queue.Enqueue( 
-        new Tuple<string, XYZ>( 
+      _queue.Enqueue(
+        new Tuple<string, XYZ>(
           uid, offset ) );
     }
   }

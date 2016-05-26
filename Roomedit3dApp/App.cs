@@ -66,7 +66,7 @@ namespace Roomedit3dApp
       string uid = (string) data2["externalId"];
       XYZ offset = new XYZ(
         (double) data2["offset"]["x"],
-        (double) data2["offset"]["y"], 
+        (double) data2["offset"]["y"],
         (double) data2["offset"]["z"] );
 
       _bimUpdater.Enqueue( uid, offset );
@@ -108,10 +108,10 @@ namespace Roomedit3dApp
 
         _socket = IO.Socket( _url, options );
 
-        _socket.On( Socket.EVENT_CONNECT, () 
+        _socket.On( Socket.EVENT_CONNECT, ()
           => Util.Log( "Connected" ) );
 
-        _socket.On( "transform", data 
+        _socket.On( "transform", data
           => Enqueue( data ) );
 
         _event = ExternalEvent.Create( _bimUpdater );
