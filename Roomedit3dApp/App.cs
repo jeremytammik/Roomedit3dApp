@@ -1,7 +1,6 @@
 #region Namespaces
 using Autodesk.Revit.UI;
 using Quobject.SocketIoClientDotNet.Client;
-using System.Diagnostics;
 #endregion
 
 namespace Roomedit3dApp
@@ -16,7 +15,7 @@ namespace Roomedit3dApp
     /// <summary>
     /// Socket broadcast URL.
     /// </summary>
-    const string _url = "https://roomedit3d.herokuapp.com/";
+    const string _url = "https://roomedit3d.herokuapp.com:443";
 
     #region External event subscription and handling
     /// <summary>
@@ -30,7 +29,7 @@ namespace Roomedit3dApp
     static BimUpdater _bimUpdater = null;
 
     /// <summary>
-    /// Store the socket.
+    /// Store the socket we are listening to.
     /// </summary>
     static Socket _socket = null;
 
@@ -78,7 +77,14 @@ namespace Roomedit3dApp
 
         _bimUpdater = new BimUpdater();
 
-        _socket = IO.Socket( _url );
+        var options = new IO.Options()
+        {
+          IgnoreServerCertificateValidation = true,
+          AutoConnect = true,
+          ForceNew = true
+        };
+
+        _socket = IO.Socket( _url, options );
 
         _socket.On( "transform", data => Enqueue( data ) );
 

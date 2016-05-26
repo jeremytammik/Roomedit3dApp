@@ -14,6 +14,9 @@ namespace Roomedit3dApp
   /// </summary>
   class BimUpdater : IExternalEventHandler
   {
+    /// <summary>
+    /// The queue of pending tasks.
+    /// </summary>
     Queue<object> _queue = null;
 
     public BimUpdater()
@@ -34,7 +37,7 @@ namespace Roomedit3dApp
       {
         t.Start( GetName() );
 
-        while( 0 < _queue.Count )
+        while ( 0 < _queue.Count )
         {
           Debug.Print( _queue.Dequeue().ToString() );
         }
