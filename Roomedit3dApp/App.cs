@@ -36,14 +36,6 @@ namespace Roomedit3dApp
     static Socket _socket = null;
 
     /// <summary>
-    /// Provide public read-only access to external event.
-    /// </summary>
-    public static ExternalEvent Event
-    {
-      get { return _event; }
-    }
-
-    /// <summary>
     /// Enqueue a new BIM updater task.
     /// </summary>
     static void Enqueue( object data )
