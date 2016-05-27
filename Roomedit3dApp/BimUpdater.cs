@@ -32,6 +32,9 @@ namespace Roomedit3dApp
     /// </summary>
     public void Execute( UIApplication a )
     {
+      Debug.Assert( 0 < _queue.Count, 
+        "why are we here with nothing to do?" );
+
       Document doc = a.ActiveUIDocument.Document;
 
       using ( Transaction t = new Transaction( doc ) )
