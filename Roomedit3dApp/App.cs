@@ -10,15 +10,22 @@ namespace Roomedit3dApp
   class App : IExternalApplication
   {
     /// <summary>
+    /// Switch between earlier v1 and current v2.
+    /// </summary>
+    const bool _use_v2_and_oauth2 = true;
+
+    /// <summary>
     /// Caption
     /// </summary>
-    public const string Caption = "Roomedit3d";
+    public const string Caption = "Roomedit3d" 
+      + (_use_v2_and_oauth2 ? "V2" : "");
 
     /// <summary>
     /// Socket broadcast URL.
     /// </summary>
     const string _url_v1 = "https://roomedit3d.herokuapp.com:443";
-    const string _url = "https://roomedit3dv2.herokuapp.com:443";
+    const string _url_v2 = "https://roomedit3dv2.herokuapp.com:443";
+    const string _url = _use_v2_and_oauth2 ? _url_v2 : _url_v1;
 
     #region External event subscription and handling
     /// <summary>
