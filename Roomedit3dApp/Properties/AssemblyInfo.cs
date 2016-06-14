@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
 // 2016-05-19 2017.0.0.2 Roomedit3dSocketTest works, receiving messages from roomedit3d web server
 // 2016-05-26 2017.0.0.3 Roomedit3dApp socket connection works, receiving messages from roomedit3d web server
 // 2016-05-26 2017.0.0.4 Roomedit3dApp transformation works, updating BIM from viewer live
+// 2016-06-13 2017.0.0.5 updated to new heroku url for roomedit3dv2 using oauth2
 //
-[assembly: AssemblyVersion( "2017.0.0.4" )]
-[assembly: AssemblyFileVersion( "2017.0.0.4" )]
+[assembly: AssemblyVersion( "2017.0.0.5" )]
+[assembly: AssemblyFileVersion( "2017.0.0.5" )]

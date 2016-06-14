@@ -17,7 +17,8 @@ namespace Roomedit3dApp
     /// <summary>
     /// Socket broadcast URL.
     /// </summary>
-    const string _url = "https://roomedit3d.herokuapp.com:443";
+    const string _url_v1 = "https://roomedit3d.herokuapp.com:443";
+    const string _url = "https://roomedit3dv2.herokuapp.com:443";
 
     #region External event subscription and handling
     /// <summary>
