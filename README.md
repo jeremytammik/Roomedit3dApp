@@ -5,7 +5,8 @@ and [SocketIoClientDotNet](https://github.com/Quobject/SocketIoClientDotNet) to
 subscribe to real-time [roomedit3d](https://github.com/jeremytammik/roomedit3d) BIM updates.
 
 For more information, please refer to
-the [roomedit3d](https://github.com/jeremytammik/roomedit3d) documentation.
+the initial [roomedit3d](https://github.com/jeremytammik/roomedit3d) and the 
+updated [roomedit3dv3](https://github.com/Autodesk-Forge/forge-boilers.nodejs/tree/roomedit3d) documentation.
 
 
 ## Author
