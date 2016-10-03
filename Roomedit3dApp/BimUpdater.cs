@@ -37,22 +37,36 @@ namespace Roomedit3dApp
 
       Document doc = a.ActiveUIDocument.Document;
 
-      using ( Transaction t = new Transaction( doc ) )
+      // Ensure that the unique id refers to a valid
+      // element from the current doucument. If not, 
+      // no need to start a transaction.
+
+      string uid = _queue.Peek().Item1;
+      Element e = doc.GetElement( uid );
+
+      if( null != e )
       {
-        t.Start( GetName() );
-
-        while ( 0 < _queue.Count )
+        using( Transaction t = new Transaction( doc ) )
         {
-          Tuple<string, XYZ> task = _queue.Dequeue();
+          t.Start( GetName() );
 
-          Debug.Print( "Translating {0} by {1}",
-            task.Item1, Util.PointString( task.Item2 ) );
+          while( 0 < _queue.Count )
+          {
+            Tuple<string, XYZ> task = _queue.Dequeue();
 
-          Element e = doc.GetElement( task.Item1 );
-          ElementTransformUtils.MoveElement(
-            doc, e.Id, task.Item2 );
+            Debug.Print( "Translating {0} by {1}",
+              task.Item1, Util.PointString( task.Item2 ) );
+
+            e = doc.GetElement( task.Item1 );
+
+            if( null != e )
+            {
+              ElementTransformUtils.MoveElement(
+                doc, e.Id, task.Item2 );
+            }
+          }
+          t.Commit();
         }
-        t.Commit();
       }
     }
 
