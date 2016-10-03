@@ -12,20 +12,21 @@ namespace Roomedit3dApp
     /// <summary>
     /// Switch between earlier v1 and current v2.
     /// </summary>
-    const bool _use_v2_and_oauth2 = true;
+    const bool _use_forge_oauth = true;
 
     /// <summary>
     /// Caption
     /// </summary>
     public const string Caption = "Roomedit3d" 
-      + (_use_v2_and_oauth2 ? "V2" : "");
+      + (_use_forge_oauth ? "V3" : "");
 
     /// <summary>
     /// Socket broadcast URL.
     /// </summary>
     const string _url_v1 = "https://roomedit3d.herokuapp.com:443";
     const string _url_v2 = "https://roomedit3dv2.herokuapp.com:443";
-    const string _url = _use_v2_and_oauth2 ? _url_v2 : _url_v1;
+    const string _url_v3 = "https://roomedit3dv3.herokuapp.com:443";
+    const string _url = _use_forge_oauth ? _url_v3 : _url_v1;
 
     #region External event subscription and handling
     /// <summary>
@@ -52,24 +53,24 @@ namespace Roomedit3dApp
 
       string s = string.Format(
         "transform: uid={0} ({1:0.00},{2:0.00},{3:0.00})",
-        data2["externalId"], data2["offset"]["x"],
-        data2["offset"]["y"], data2["offset"]["z"] );
+        data2["externalId"], data2["translation"]["x"],
+        data2["translation"]["y"], data2["translation"]["z"] );
 
       Util.Log( "Enqueue task " + s );
 
       string uid1 = data2["externalId"].ToString();
-      XYZ offset1 = new XYZ(
-        double.Parse( data2["offset"]["x"].ToString() ),
-        double.Parse( data2["offset"]["y"].ToString() ),
-        double.Parse( data2["offset"]["z"].ToString() ) );
+      XYZ translation1 = new XYZ(
+        double.Parse( data2["translation"]["x"].ToString() ),
+        double.Parse( data2["translation"]["y"].ToString() ),
+        double.Parse( data2["translation"]["z"].ToString() ) );
 
       string uid = (string) data2["externalId"];
-      XYZ offset = new XYZ(
-        (double) data2["offset"]["x"],
-        (double) data2["offset"]["y"],
-        (double) data2["offset"]["z"] );
+      XYZ translation = new XYZ(
+        (double) data2["translation"]["x"],
+        (double) data2["translation"]["y"],
+        (double) data2["translation"]["z"] );
 
-      _bimUpdater.Enqueue( uid, offset );
+      _bimUpdater.Enqueue( uid, translation );
       _event.Raise();
     }
 

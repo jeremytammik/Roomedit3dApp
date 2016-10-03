@@ -8,7 +8,8 @@ namespace Roomedit3dSocketTest
   class Program
   {
     const string _url_v1 = "https://roomedit3d.herokuapp.com:443";
-    const string _url = "https://roomedit3dv2.herokuapp.com:443";
+    const string _url_v2 = "https://roomedit3dv2.herokuapp.com:443";
+    const string _url = "https://roomedit3dv3.herokuapp.com:443";
 
     static void Main( string[] args )
     {
@@ -36,8 +37,8 @@ namespace Roomedit3dSocketTest
 
         Console.WriteLine( string.Format(
           "transform: externalId={0} ({1:0.00},{2:0.00},{3:0.00})", 
-          data2["externalId"], data2["offset"]["x"], 
-          data2["offset"]["y"], data2["offset"]["z"] ) );
+          data2["externalId"], data2["translation"]["x"], 
+          data2["translation"]["y"], data2["translation"]["z"] ) );
         }
       } );
 
