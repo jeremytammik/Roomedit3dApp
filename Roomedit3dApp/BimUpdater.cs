@@ -25,50 +25,50 @@ namespace Roomedit3dApp
       _queue = new Queue<Tuple<string, XYZ>>();
     }
 
-    /// <summary>
-    /// Execute method invoked by Revit via the 
-    /// external event as a reaction to a call 
-    /// to its Raise method.
-    /// </summary>
-    public void Execute( UIApplication a )
+  /// <summary>
+  /// Execute method invoked by Revit via the 
+  /// external event as a reaction to a call 
+  /// to its Raise method.
+  /// </summary>
+  public void Execute( UIApplication a )
+  {
+    Debug.Assert( 0 < _queue.Count, 
+      "why are we here with nothing to do?" );
+
+    Document doc = a.ActiveUIDocument.Document;
+
+    // Ensure that the unique id refers to a valid
+    // element from the current doucument. If not, 
+    // no need to start a transaction.
+
+    string uid = _queue.Peek().Item1;
+    Element e = doc.GetElement( uid );
+
+    if( null != e )
     {
-      Debug.Assert( 0 < _queue.Count, 
-        "why are we here with nothing to do?" );
-
-      Document doc = a.ActiveUIDocument.Document;
-
-      // Ensure that the unique id refers to a valid
-      // element from the current doucument. If not, 
-      // no need to start a transaction.
-
-      string uid = _queue.Peek().Item1;
-      Element e = doc.GetElement( uid );
-
-      if( null != e )
+      using( Transaction t = new Transaction( doc ) )
       {
-        using( Transaction t = new Transaction( doc ) )
+        t.Start( GetName() );
+
+        while( 0 < _queue.Count )
         {
-          t.Start( GetName() );
+          Tuple<string, XYZ> task = _queue.Dequeue();
 
-          while( 0 < _queue.Count )
+          Debug.Print( "Translating {0} by {1}",
+            task.Item1, Util.PointString( task.Item2 ) );
+
+          e = doc.GetElement( task.Item1 );
+
+          if( null != e )
           {
-            Tuple<string, XYZ> task = _queue.Dequeue();
-
-            Debug.Print( "Translating {0} by {1}",
-              task.Item1, Util.PointString( task.Item2 ) );
-
-            e = doc.GetElement( task.Item1 );
-
-            if( null != e )
-            {
-              ElementTransformUtils.MoveElement(
-                doc, e.Id, task.Item2 );
-            }
+            ElementTransformUtils.MoveElement(
+              doc, e.Id, task.Item2 );
           }
-          t.Commit();
         }
+        t.Commit();
       }
     }
+  }
 
     /// <summary>
     /// Required IExternalEventHandler interface 
